@@ -12,10 +12,9 @@ class Frog(ABC):
         self.health = int(self.BASE_HEALTH * health_multiplier)  # Базовое здоровье
         self.armor = int(self.BASE_ARMOR * armor_multiplier)  # Базовая броня
 
-    @abstractmethod
     def get_initiative(self):
         """Возвращает значение инициативы."""
-        pass
+        return random.randint(1, 20)
 
     def get_damage(self):
         """Возвращает случайное значение урона в диапазоне [attack / 2; attack]."""
@@ -25,11 +24,18 @@ class Frog(ABC):
         """Возвращает случайное значение брони в диапазоне [0; armor]."""
         return random.randint(0, self.armor)
 
+    @abstractmethod
+    def description(self):
+        pass
+
 
 class BasicFrog(Frog):
 
-    def get_initiative(self):
-        return random.randint(1, 20)
+    def description(self):
+        return (
+            "Basic Frog: A well-rounded frog with balanced abilities. "
+            "It has average attack, health, and armor values, making it a versatile choice."
+        )
 
 
 class AssassinFrog(Frog):
@@ -37,18 +43,24 @@ class AssassinFrog(Frog):
     def __init__(self):
         super().__init__(health_multiplier=1.25)
 
-    def get_initiative(self):
-        return random.randint(1, 20) + 5
+    def description(self):
+        return (
+            "Assassin Frog: A stealthy frog with high health. "
+            "It excels in surviving longer in battles, allowing it to outlast opponents."
+        )
 
 
 class AdventurerFrog(Frog):
 
-    def get_initiative(self):
-        return random.randint(1, 20) + 3
-
     def get_damage(self):
         """Возвращает случайное значение урона в диапазоне [attack / 2; attack]."""
         return random.randint(self.attack // 2, self.attack) * 1.5
+
+    def description(self):
+        return (
+            "Adventurer Frog: A daring frog with high attack power. "
+            "It deals increased damage, making it a formidable opponent in combat."
+        )
 
 
 class CraftsmanFrog(Frog):
@@ -56,6 +68,9 @@ class CraftsmanFrog(Frog):
     def __init__(self):
         super().__init__(armor_multiplier=2.0)
 
-    def get_initiative(self):
-        return random.randint(1, 20) - 2
+    def description(self):
+        return (
+            "Craftsman Frog: A sturdy frog with high armor and health. "
+            "It is designed to withstand attacks, making it a tank in battles."
+        )
 
