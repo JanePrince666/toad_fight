@@ -16,31 +16,27 @@ async def check_balance():
     balance_results = {}
 
     num_battles = 10000  # Number of battles to check balance
-    seeds = [42, 24, 99]  # Different seeds for randomization
 
     for frog_class in frog_classes:
         class_results = []
 
-        for seed in seeds:
-            wins = 0
-            losses = 0
+        wins = 0
+        losses = 0
 
-            random.seed(seed)  # Set the seed for randomization
+        # Conduct battles against all other classes
+        for opponent_class in frog_classes:
+            if frog_class != opponent_class:
+                results = await run_battles(num_battles, frog_class, opponent_class)
+                wins += results[1]  # Wins for the current class
+                losses += results[2]  # Losses for the current class
 
-            # Conduct battles against all other classes
-            for opponent_class in frog_classes:
-                if frog_class != opponent_class:
-                    results = await run_battles(num_battles, frog_class, opponent_class)
-                    wins += results[1]  # Wins for the current class
-                    losses += results[2]  # Losses for the current class
-
-            # Calculate win rate
-            win_rate = wins / (wins + losses) if (wins + losses) > 0 else 0
-            class_results.append({
-                'wins': wins,
-                'losses': losses,
-                'win_rate': win_rate
-            })
+        # Calculate win rate
+        win_rate = wins / (wins + losses) if (wins + losses) > 0 else 0
+        class_results.append({
+            'wins': wins,
+            'losses': losses,
+            'win_rate': win_rate
+        })
 
         balance_results[frog_class.__name__] = class_results
 
