@@ -59,10 +59,10 @@ async def run_battles(num_battles):
               with keys 1 and 2 representing the number of wins for each frog.
     """
     results = {1: 0, 2: 0}
+    frog_classes = [BasicFrog, AssassinFrog, AdventurerFrog, CraftsmanFrog]
 
     for fight in range(num_battles):
         # Randomly select two frogs for the battle
-        frog_classes = [BasicFrog, AssassinFrog, AdventurerFrog, CraftsmanFrog]
         frog1 = random.choice(frog_classes)()
         frog2 = random.choice(frog_classes)()
 
@@ -80,7 +80,7 @@ async def main():
 
     # Print the results of the battles to console
     print(f"First frog wins: {results1[1] + results2[1]}")
-    print(f"Second frog wins: {results1[2] + results2[1]}")
+    print(f"Second frog wins: {results1[2] + results2[2]}")
 
 
 if __name__ == "__main__":
