@@ -72,9 +72,7 @@ async def run_battles(num_battles, frog_class1, frog_class2):
 async def main():
     balance_results = await check_balance()
     for frog_name, results in balance_results.items():
-        print(f"{frog_name}:")
-        for i, result in enumerate(results):
-            print(f"  Randomization {i + 1}: Wins = {result['wins']}, Losses = {result['losses']}, Win Rate = {result['win_rate']:.2%}")
+        print(f"{frog_name}: Wins = {results[0]['wins']}, Losses = {results[0]['losses']}, Win Rate = {results[0]['win_rate']:.2%}")
 
 
 if __name__ == "__main__":
