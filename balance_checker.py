@@ -1,5 +1,4 @@
 import asyncio
-import random
 from frogs import BasicFrog, AssassinFrog, AdventurerFrog, CraftsmanFrog
 from game import battle
 
