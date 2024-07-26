@@ -5,11 +5,18 @@ from game import battle
 
 
 async def check_balance():
+    """
+    Checks the balance of different frog classes by running a series of battles.
+
+    Returns:
+        dict: A dictionary containing the results of battles for each frog class,
+              including wins, losses, and win rates.
+    """
     frog_classes = [BasicFrog, AssassinFrog, AdventurerFrog, CraftsmanFrog]
     balance_results = {}
 
-    num_battles = 10000  # Количество боев для проверки баланса
-    seeds = [42, 24, 99]  # Разные семена для рандомизации
+    num_battles = 10000  # Number of battles to check balance
+    seeds = [42, 24, 99]  # Different seeds for randomization
 
     for frog_class in frog_classes:
         class_results = []
@@ -18,15 +25,16 @@ async def check_balance():
             wins = 0
             losses = 0
 
-            random.seed(seed)  # Устанавливаем семя для рандомизации
+            random.seed(seed)  # Set the seed for randomization
 
-            # Проведение боев против всех других классов
+            # Conduct battles against all other classes
             for opponent_class in frog_classes:
                 if frog_class != opponent_class:
                     results = await run_battles(num_battles, frog_class, opponent_class)
-                    wins += results[1]  # Победы текущего класса
-                    losses += results[2]  # Поражения текущего класса
+                    wins += results[1]  # Wins for the current class
+                    losses += results[2]  # Losses for the current class
 
+            # Calculate win rate
             win_rate = wins / (wins + losses) if (wins + losses) > 0 else 0
             class_results.append({
                 'wins': wins,
@@ -40,12 +48,25 @@ async def check_balance():
 
 
 async def run_battles(num_battles, frog_class1, frog_class2):
+    """
+    Runs a specified number of battles between two frog classes.
+
+    Args:
+        num_battles (int): The number of battles to run.
+        frog_class1 (Frog): The first frog class.
+        frog_class2 (Frog): The second frog class.
+
+    Returns:
+        dict: A dictionary containing the results of the battles,
+              with keys 1 and 2 representing the number of wins for each frog.
+    """
     results = {1: 0, 2: 0}
 
     for _ in range(num_battles):
-        frog1 = frog_class1()
-        frog2 = frog_class2()
+        frog1 = frog_class1()  # Create an instance of the first frog class
+        frog2 = frog_class2()  # Create an instance of the second frog class
 
+        # Determine the winner of the battle
         winner = await battle(frog1, frog2)
         results[winner] += 1
 
@@ -57,7 +78,8 @@ async def main():
     for frog_name, results in balance_results.items():
         print(f"{frog_name}:")
         for i, result in enumerate(results):
-            print(f"  Рандомизация {i+1}: Победы = {result['wins']}, Поражения = {result['losses']}, Уровень побед = {result['win_rate']:.2%}")
+            print(f"  Randomization {i + 1}: Wins = {result['wins']}, Losses = {result['losses']}, Win Rate = {result['win_rate']:.2%}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
