@@ -75,11 +75,12 @@ async def run_battles(num_battles):
 
 async def main():
     num_battles = 100  # Specify the number of battles to run
-    results = await run_battles(num_battles)
+    results1 = await run_battles(num_battles)
+    results2 = await run_battles(num_battles)
 
     # Print the results of the battles to console
-    print(f"First frog wins: {results[1]}")
-    print(f"Second frog wins: {results[2]}")
+    print(f"First frog wins: {results1[1] + results2[1]}")
+    print(f"Second frog wins: {results1[2] + results2[1]}")
 
 
 if __name__ == "__main__":

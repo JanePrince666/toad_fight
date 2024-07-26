@@ -12,7 +12,8 @@ class Frog(ABC):
         self.health = int(self.BASE_HEALTH * health_multiplier)  # Base health
         self.armor = int(self.BASE_ARMOR * armor_multiplier)  # Base armor
 
-    def get_initiative(self):
+    @staticmethod
+    def get_initiative():
         """Returns the initiative value."""
         return random.randint(1, 20)
 
